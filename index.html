@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1120">
+<meta name="description" content="ML1709 Industrial AI Application Lab experiments 3–10: aims, procedures, code, expected outputs and results.">
+<title>Industrial AI Application Lab | ML1709</title>
+<style>
+:root{color-scheme:dark;--bg:#080d18;--panel:#111c2f;--panel2:#17243b;--text:#e7edf7;--muted:#a9b7cc;--blue:#7db5ff;--line:#263750;--green:#9ee6c0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{padding:30px 18px 24px;background:linear-gradient(135deg,#111c32,#0b1222);border-bottom:1px solid var(--line)}
+.wrap{max-width:980px;margin:0 auto}
+.eyebrow{color:var(--green);font-size:.8rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+h1{font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.12;margin:.45rem 0}
+header p{margin:.6rem 0 0;color:var(--muted)}
+main{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+.toolbar{position:sticky;top:0;z-index:5;padding:12px 0;background:rgba(8,13,24,.94);backdrop-filter:blur(10px)}
+input{width:100%;background:#111c2f;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font:inherit;outline:none}
+input:focus{border-color:var(--blue)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.filters button,.copy{border:1px solid var(--line);border-radius:9px;padding:8px 12px;background:var(--panel2);color:var(--text);font:inherit;cursor:pointer}
+.filters button.active,.copy{background:#1d4ed8;border-color:#3974ef}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3vw,24px);margin:18px 0;scroll-margin-top:140px;box-shadow:0 8px 24px #0002}
+.cardhead{display:flex;gap:12px;align-items:flex-start}
+.num{flex:0 0 42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#1d3558;color:var(--blue);font-weight:800}
+h2{font-size:1.25rem;line-height:1.3;margin:2px 0 12px}
+h3{font-size:1rem;color:var(--blue);margin:20px 0 8px}
+p{margin:8px 0}
+ul{padding-left:22px;margin:8px 0}
+li{padding:2px 0}
+pre{margin:10px 0 0;padding:16px;overflow:auto;background:#060a12;border:1px solid #1c2a40;border-radius:12px;font-size:.86rem;line-height:1.55;tab-size:4}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}
+.tag{color:var(--muted);font-size:.8rem}
+.output{border-left:3px solid var(--green);padding:10px 13px;background:#0d1c20;border-radius:0 8px 8px 0}
+.result{color:#d7e6f9}
+.note{color:var(--muted);font-size:.92rem}
+.empty{display:none;padding:22px;color:var(--muted);text-align:center}
+footer{border-top:1px solid var(--line);padding:24px 16px;color:var(--muted);text-align:center;font-size:.9rem}
+a{color:var(--blue)}
+@media(min-width:760px){.toolbar{border-radius:0 0 14px 14px}.card{padding:24px 28px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">ML1709 · Department of AML</div>
+<h1>Industrial AI Application Lab</h1>
+<p>Experiments 3–10 · Aim, procedure, short code, expected output and result</p>
+</div></header>
+<main>
+<div class="toolbar">
+<label for="search" class="tag">Find an experiment</label>
+<input id="search" type="search" placeholder="Search Docker, OpenCV, ONNX, speech, pruning…" autocomplete="off">
+<div class="filters" id="filters">
+<button type="button" class="active" data-filter="all">All experiments</button>
+<button type="button" data-filter="3">Ex. 3</button><button type="button" data-filter="4">Ex. 4</button>
+<button type="button" data-filter="5">Ex. 5</button><button type="button" data-filter="6">Ex. 6</button>
+<button type="button" data-filter="7">Ex. 7</button><button type="button" data-filter="8">Ex. 8</button>
+<button type="button" data-filter="9">Ex. 9</button><button type="button" data-filter="10">Ex. 10</button>
+</div>
+</div>
+<div id="list"></div><div class="empty" id="empty">No matching experiments. Try another search.</div>
+<p class="note">Study note: code snippets are shortened demonstrations based on the uploaded lab manual. See each experiment's notes for required files, dependencies, and limitations. Outputs describe expected behavior and are not claims that code was executed here.</p>
+</main>
+<footer>Industrial AI Application Lab · ML1709 · Experiments 3–10</footer>
+<script>
+const labs = [{"n": 3, "title": "Create a Web Server Using Docker", "aim": "Create a web server using a Docker container, build it, and instantiate the container.", "procedure": ["Write a simple Flask web-server application.", "Create a Dockerfile and requirements.txt.", "Build the Docker image.", "Run the container and open the web server."], "code": "# app.py\nfrom flask import Flask\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef hello_world():\n    return \"Hello, World!\"\n\nif __name__ == \"__main__\":\n    app.run(debug=True, host=\"0.0.0.0\", port=80)\n", "output": "Open http://localhost:4000/ after starting the container. The browser should display: Hello, World!", "result": "Thus, a web server was created using a Docker container, built, and instantiated.", "notes": "The lab manual also specifies a Dockerfile based on python:3.8-slim, EXPOSE 80, and CMD [\"python\", \"app.py\"], with Flask listed in requirements.txt.", "files": [["Dockerfile", "FROM python:3.8-slim\nWORKDIR /app\nCOPY . /app\nRUN pip install --no-cache-dir -r requirements.txt\nEXPOSE 80\nENV NAME World\nCMD [\"python\", \"app.py\"]\n"], ["requirements.txt", "Flask\n"]]}, {"n": 4, "title": "Image Processing Using OpenCV", "aim": "Convert an image to grayscale, apply Gaussian blur, and detect edges using OpenCV in Python.", "procedure": ["Read the input image.", "Convert BGR to grayscale.", "Apply Gaussian blur.", "Detect edges using Canny and display the results."], "code": "import cv2\nimport matplotlib.pyplot as plt\n\nimg = cv2.imread(\"cat.jpg\")\nif img is None:\n    raise FileNotFoundError(\"Place cat.jpg beside this script.\")\n\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nblur = cv2.GaussianBlur(gray, (5, 5), 0)\nedges = cv2.Canny(blur, 50, 150)\n\ntitles = [\"Original\", \"Grayscale\", \"Blurred\", \"Edges\"]\nimages = [cv2.cvtColor(img, cv2.COLOR_BGR2RGB), gray, blur, edges]\ncmaps = [None, \"gray\", \"gray\", \"gray\"]\n\nfig, axes = plt.subplots(2, 2, figsize=(9, 7))\nfor ax, title, image, cmap in zip(axes.flat, titles, images, cmaps):\n    ax.imshow(image, cmap=cmap)\n    ax.set_title(title)\n    ax.axis(\"off\")\nplt.tight_layout()\nplt.show()\n", "output": "A 2×2 display shows the original image, grayscale image, blurred image, and Canny edge map.", "result": "Thus, grayscale conversion, Gaussian blurring, and edge detection were performed using OpenCV.", "notes": "Requires opencv-python and matplotlib. Place an image named cat.jpg in the same folder as the script."}, {"n": 5, "title": "Video Processing Using OpenCV", "aim": "Process each frame of a video stream with simple transformations in real time.", "procedure": ["Open the video file.", "Read frames in a loop.", "Convert each frame to grayscale.", "Display processed frames; press q to exit."], "code": "import cv2\n\ncap = cv2.VideoCapture(\"Sample.mp4\")\nif not cap.isOpened():\n    raise FileNotFoundError(\"Place Sample.mp4 beside this script.\")\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        print(\"Video Ends\")\n        break\n\n    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)\n    cv2.imshow(\"Processed Frame\", gray)\n\n    if cv2.waitKey(30) & 0xFF == ord(\"q\"):\n        break\n\ncap.release()\ncv2.destroyAllWindows()\n", "output": "A video window displays the grayscale frames. Press q to stop; the program prints Video Ends when the video finishes.", "result": "Thus, video frames were processed using OpenCV and a grayscale transformation.", "notes": "Requires opencv-python and a video file named Sample.mp4 in the same folder."}, {"n": 6, "title": "Build an Image Classifier and Export to ONNX", "aim": "Build and train an image-classification neural network using PyTorch, evaluate it, and export it to ONNX format.", "procedure": ["Load and normalize Fashion-MNIST.", "Define a neural network.", "Train and evaluate the model.", "Export the model to ONNX."], "code": "# Short demonstration: defines a model and exports it.\n# The full lab experiment trains and evaluates on Fashion-MNIST.\nimport torch\nimport torch.nn as nn\n\nmodel = nn.Sequential(\n    nn.Flatten(),\n    nn.Linear(28 * 28, 128),\n    nn.ReLU(),\n    nn.Linear(128, 10)\n).eval()\n\ndummy_input = torch.randn(1, 1, 28, 28)\ntorch.onnx.export(\n    model, dummy_input, \"fashion_mnist.onnx\",\n    input_names=[\"input\"], output_names=[\"output\"],\n    dynamic_axes={\"input\": {0: \"batch_size\"},\n                  \"output\": {0: \"batch_size\"}}\n)\nprint(\"Model exported to ONNX.\")\n", "output": "A file named fashion_mnist.onnx is created, and the program prints Model exported to ONNX.", "result": "The lab manual's full experiment trains a PyTorch image classifier, evaluates test accuracy, and converts the model to ONNX.", "notes": "This compact web example only demonstrates model definition and export; it does not train the Fashion-MNIST classifier or calculate accuracy. The manual's full experiment uses Fashion-MNIST."}, {"n": 7, "title": "Speech-to-Text Conversion", "aim": "Input a WAV audio file and convert its speech to text using a pretrained Wav2Vec2 model.", "procedure": ["Load a pretrained speech recognition model.", "Load the WAV file.", "Resample audio to 16 kHz if needed.", "Run recognition and print the transcription."], "code": "# Install: pip install transformers torch torchaudio\nfrom transformers import pipeline\n\nrecognizer = pipeline(\n    \"automatic-speech-recognition\",\n    model=\"facebook/wav2vec2-base-960h\"\n)\nresult = recognizer(\"harvard.wav\")\nprint(\"Transcription:\", result[\"text\"])\n", "output": "Prints a transcription of the speech contained in harvard.wav. The manual shows an example transcription beginning: THE STALE SMELL OF OLD BEER LINGERS...", "result": "Thus, speech in a WAV audio file was converted into text using a pretrained Wav2Vec2 model.", "notes": "The lab manual's title mentions Word2Vec, but the actual program uses Wav2Vec2. This compact version uses a Transformers pipeline; install transformers, torch, and torchaudio and provide harvard.wav."}, {"n": 8, "title": "Transfer Learning Using ResNet18", "aim": "Use a pretrained ResNet18 model for CIFAR-10 image classification and evaluate it.", "procedure": ["Load pretrained ResNet18.", "Prepare CIFAR-10 and transforms.", "Replace the final layer with 10 outputs.", "Train the final layer and evaluate test accuracy."], "code": "# Short demonstration of adapting ResNet18.\n# This snippet does not train or evaluate the model.\nimport torch\nimport torch.nn as nn\nfrom torchvision import models\n\nmodel = models.resnet18(weights=\"DEFAULT\")\nfor param in model.parameters():\n    param.requires_grad = False\n\nmodel.fc = nn.Linear(model.fc.in_features, 10)\nmodel.eval()\n\nwith torch.no_grad():\n    sample = torch.randn(1, 3, 224, 224)\n    prediction = model(sample).argmax(dim=1).item()\n\nprint(\"Predicted class index:\", prediction)\n", "output": "Prints a predicted class index from 0 to 9 for the random demonstration input. A meaningful CIFAR-10 result requires a real image and training/evaluation.", "result": "The full lab experiment adapts pretrained ResNet18 for CIFAR-10, trains the final layer, evaluates accuracy, and demonstrates inference.", "notes": "The manual's example inference predicts cat for its sample image. This shortened example uses random input and therefore does not reproduce that result."}, {"n": 9, "title": "MobileNetV2 Quantization", "aim": "Perform quantization on MobileNetV2 using the FBGEMM quantization method and evaluate the model.", "procedure": ["Load a pretrained MobileNetV2 model.", "Set a quantization configuration.", "Prepare and calibrate the model.", "Convert it to a quantized model and evaluate it."], "code": "# Compact demonstration; exact layer fusion and quantization\n# support can vary with the installed PyTorch/torchvision version.\nimport torch\nfrom torchvision.models import mobilenet_v2, MobileNet_V2_QuantizedWeights\n\nmodel = mobilenet_v2(weights=None).eval()\nmodel.qconfig = torch.ao.quantization.get_default_qconfig(\"fbgemm\")\n\nprepared = torch.ao.quantization.prepare(model, inplace=False)\nwith torch.no_grad():\n    prepared(torch.randn(1, 3, 224, 224))  # calibration\nquantized = torch.ao.quantization.convert(prepared, inplace=False)\n\nprint(\"Quantized model created.\")\n", "output": "If supported by the installed PyTorch version and model operators, the program prints Quantized model created.", "result": "The full lab experiment compares FP32 and INT8 model accuracy after calibration and quantization.", "notes": "Quantization APIs and supported operators vary across PyTorch versions; the lab manual's exact fusion code may need adjustment for the installed torchvision model. This compact snippet does not calculate accuracy."}, {"n": 10, "title": "L1 Structured Pruning on ResNet18", "aim": "Apply L1 structured pruning to convolutional layers in ResNet18 and evaluate the pruned model.", "procedure": ["Load pretrained ResNet18.", "Apply L1-norm structured pruning to convolution filters.", "Remove pruning reparameterizations.", "Evaluate the pruned model and optionally fine-tune."], "code": "import torch\nimport torch.nn.utils.prune as prune\nfrom torchvision.models import resnet18, ResNet18_Weights\n\nmodel = resnet18(weights=ResNet18_Weights.DEFAULT)\n\nfor module in model.modules():\n    if isinstance(module, torch.nn.Conv2d):\n        prune.ln_structured(\n            module, name=\"weight\", amount=0.3, n=1, dim=0\n        )\n        prune.remove(module, \"weight\")\n\nprint(\"L1 structured pruning completed.\")\n", "output": "Prints L1 structured pruning completed. This confirms that the pruning operations ran; it is not an accuracy measurement.", "result": "The full lab experiment applies 30% structured pruning to convolutional layers and evaluates the pruned ResNet18 on CIFAR-10.", "notes": "The manual's evaluation code uses CUDA tensors directly and has device/dataloader omissions in the extracted text. This compact version demonstrates pruning only; it does not evaluate accuracy."}];
+let activeFilter = "all";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function card(e){
+ const steps=e.procedure.map(s=>`<li>${esc(s)}</li>`).join("");
+ return `<article class="card" id="experiment-${e.n}" data-n="${e.n}" data-search="${esc((e.title+" "+e.aim+" "+e.procedure.join(" ")+" "+e.notes).toLowerCase())}">
+ <div class="cardhead"><div class="num">${e.n}</div><div><h2>Experiment ${e.n}: ${esc(e.title)}</h2><p><strong>Aim:</strong> ${esc(e.aim)}</p></div></div>
+ <h3>Procedure</h3><ol>${steps}</ol>
+ <div class="codebar"><span class="tag">Python · Short code</span><button class="copy" type="button" data-copy="${e.n}">Copy code</button></div>
+ <pre><code id="code-${e.n}">${esc(e.code)}</code></pre>
+ <h3>Expected output</h3><div class="output">${esc(e.output)}</div>
+ <h3>Result</h3><p class="result">${esc(e.result)}</p>
+ <h3>Notes</h3><p class="note">${esc(e.notes)}</p>
+ </article>`;
+}
+function update(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ let visible=0;
+ document.querySelectorAll(".card").forEach(c=>{
+  const matches=(activeFilter==="all"||c.dataset.n===activeFilter) &&
+    (!q||c.dataset.search.includes(q)||c.textContent.toLowerCase().includes(q));
+  c.hidden=!matches;if(matches)visible++;
+ });
+ document.getElementById("empty").style.display=visible?"none":"block";
+}
+document.getElementById("list").innerHTML=labs.map(card).join("");
+document.getElementById("search").addEventListener("input",update);
+document.getElementById("filters").addEventListener("click",e=>{
+ const b=e.target.closest("button[data-filter]");if(!b)return;
+ activeFilter=b.dataset.filter;
+ document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("active",x===b));
+ update();
+});
+document.getElementById("list").addEventListener("click",async e=>{
+ const b=e.target.closest("button[data-copy]");if(!b)return;
+ const code=labs.find(x=>String(x.n)===b.dataset.copy).code;
+ try{
+  if(navigator.clipboard&&window.isSecureContext) await navigator.clipboard.writeText(code);
+  else {const t=document.createElement("textarea");t.value=code;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();const ok=document.execCommand("copy");t.remove();if(!ok)throw new Error("copy failed");}
+  b.textContent="Copied!";setTimeout(()=>b.textContent="Copy code",1400);
+ }catch(err){b.textContent="Select code above";setTimeout(()=>b.textContent="Copy code",1800);}
+});
+</script>
+</body></html>
